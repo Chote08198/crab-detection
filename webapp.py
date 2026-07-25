@@ -1,9 +1,12 @@
 import pathlib
+import torch
+
+# ป้องกัน Error เรื่อง WindowsPath บนระบบ Linux ของ Render
 temp = pathlib.PosixPath
 pathlib.WindowsPath = pathlib.PosixPath
 
-import pathlib
-pathlib.PosixPath = pathlib.WindowsPath
+# โหลดโมเดล YOLOv5 แบบดั้งเดิม
+model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt', force_reload=True)
 
 from flask import Flask, render_template, request, redirect
 import torch
@@ -11,9 +14,6 @@ import os
 from PIL import Image
 
 app = Flask(__name__)
-
-from ultralytics import YOLO
-model = YOLO('best.pt')
 
 
 # ----------------------------------------------------
