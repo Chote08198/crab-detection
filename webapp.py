@@ -12,8 +12,8 @@ from PIL import Image
 
 app = Flask(__name__)
 
-import torch
-model = torch.load('best.pt', map_location=torch.device('cpu'))
+from ultralytics import YOLO
+model = YOLO('best.pt')
 
 
 # ----------------------------------------------------
