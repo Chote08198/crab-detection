@@ -12,8 +12,8 @@ from PIL import Image
 
 app = Flask(__name__)
 
-# โหลดโมเดล best.pt ปูนา
-model = torch.hub.load('.', 'custom', path='best.pt', source='local')
+import torch
+model = torch.load('best.pt', map_location=torch.device('cpu'))
 
 
 # ----------------------------------------------------
