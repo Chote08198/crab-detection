@@ -1,4 +1,8 @@
 import pathlib
+temp = pathlib.PosixPath
+pathlib.WindowsPath = pathlib.PosixPath
+
+import pathlib
 pathlib.PosixPath = pathlib.WindowsPath
 
 from flask import Flask, render_template, request, redirect
@@ -10,9 +14,7 @@ app = Flask(__name__)
 
 # โหลดโมเดล best.pt ปูนา
 model = torch.hub.load('.', 'custom', path='best.pt', source='local')
-import pathlib
-temp = pathlib.PosixPath
-pathlib.WindowsPath = pathlib.PosixPath
+
 
 # ----------------------------------------------------
 # ⚙️ ปรับตั้งค่าความแม่นยำในการจับกรอบตรงนี้:
