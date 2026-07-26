@@ -1,14 +1,7 @@
 torch
 torchvision
-ultralytics
-opencv-python
+opencv-python-headless
 gunicorn
 Flask
-requests
-pandas
 numpy
-tqdm
-seaborn
-matplotlib
-PyYAML
-scipy
+pandas

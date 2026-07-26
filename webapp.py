@@ -27,7 +27,7 @@ def predict():
         img = Image.open(file.stream)
         
         # รันพยากรณ์ภาพ
-        results = model(img)
+        results = model(img, size=320)
         
         os.makedirs("static", exist_ok=True)
         
@@ -43,4 +43,3 @@ def predict():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-    results = model(img, size=320)
