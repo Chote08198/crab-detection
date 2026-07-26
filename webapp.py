@@ -1,17 +1,16 @@
-import os
 import pathlib
+import platform
+if platform.system() == 'Windows':
+    pathlib.PosixPath = pathlib.WindowsPath
+
+import os
 import torch
 from PIL import Image
 from flask import Flask, render_template, request, redirect
 
-temp = pathlib.PosixPath
-pathlib.WindowsPath = pathlib.PosixPath
-
-# ข้ามการตรวจสอบความปลอดภัยเพื่อโหลดโมเดล YOLOv5 ของคุณ
-torch.hub._validate_not_a_forked_repo = lambda a, b, c: True
-
-# โหลดโมเดลด้วย torch.hub แบบดั้งเดิม (รองรับ best.pt ของคุณชัวร์ 100%)
+# โหลดโมเดล YOLOv5 (ปรับค่าความมั่นใจเป็น 0.75 เพื่อกรองตัวที่ไม่ใช่ปูออก)
 model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt', trust_repo=True)
+model.conf = 0.75
 
 app = Flask(__name__)
 
@@ -25,14 +24,10 @@ def predict():
             return
             
         img = Image.open(file.stream)
-        
-        # รันพยากรณ์ภาพ
-        results = model(img, size=320)
+        results = model(img)
         
         os.makedirs("static", exist_ok=True)
-        
-        # บันทึกภาพผลลัพธ์
-        results.render()  # เรนเดอร์กรอบลงในภาพของ YOLOv5
+        results.render()
         for im in results.ims:
             im_base64 = Image.fromarray(im)
             im_base64.save("static/image0.jpg")
