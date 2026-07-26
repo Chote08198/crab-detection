@@ -1,10 +1,9 @@
 torch
 torchvision
-pandas
+ultralytics
 opencv-python
 gunicorn
 Flask
 requests
-PyYAML
-seaborn
-matplotlib
+pandas
+numpy
