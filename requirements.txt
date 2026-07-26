@@ -1,8 +1,12 @@
 torch
 torchvision
 ultralytics
-Flask
-gunicorn
 opencv-python-headless
+Flask
 Pillow
 numpy
+pandas
+tqdm
+scipy
+gunicorn
+seaborn
