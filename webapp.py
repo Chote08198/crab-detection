@@ -1,12 +1,12 @@
 import pathlib
 import torch
 
-# 1. แก้ปัญหา WindowsPath บนระบบ Linux ของ Render
 temp = pathlib.PosixPath
 pathlib.WindowsPath = pathlib.PosixPath
 
-# 2. ป้องกันไม่ให้ระบบถามยืนยันรีโปสทอรี่
 torch.hub._validate_not_a_forked_repo = lambda a, b, c: True
+
+model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')
 
 # 3. โหลดโมเดล YOLOv5 แบบปลอดภัย
 model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')
