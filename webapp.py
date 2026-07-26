@@ -7,8 +7,6 @@ pathlib.WindowsPath = pathlib.PosixPath
 # สั่งให้โหลดโดยระบุ trust_repo=True เพื่อบังคับข้ามการถามยืนยันผ่านเซิร์ฟเวอร์
 model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt', trust_repo=True)
 
-# 3. โหลดโมเดล YOLOv5 แบบปลอดภัย
-model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')
 from flask import Flask, render_template, request, redirect
 import torch
 import os
