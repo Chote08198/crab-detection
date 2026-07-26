@@ -4,9 +4,8 @@ import torch
 temp = pathlib.PosixPath
 pathlib.WindowsPath = pathlib.PosixPath
 
-torch.hub._validate_not_a_forked_repo = lambda a, b, c: True
-
-model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')
+# สั่งให้โหลดโดยระบุ trust_repo=True เพื่อบังคับข้ามการถามยืนยันผ่านเซิร์ฟเวอร์
+model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt', trust_repo=True)
 
 # 3. โหลดโมเดล YOLOv5 แบบปลอดภัย
 model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')
