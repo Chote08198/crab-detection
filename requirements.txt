@@ -1,6 +1,5 @@
 torch
 torchvision
-ultralytics==8.0.20
 opencv-python
 gunicorn
 Flask
@@ -10,3 +9,4 @@ numpy
 tqdm
 seaborn
 matplotlib
+PyYAML

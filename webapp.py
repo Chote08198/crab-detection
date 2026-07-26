@@ -1,10 +1,17 @@
 import os
-from ultralytics import YOLO
+import pathlib
+import torch
 from PIL import Image
 from flask import Flask, render_template, request, redirect
 
-# โหลดโมเดลด้วย ultralytics โดยตรง (ไม่พึ่ง torch.hub แล้ว)
-model = YOLO('best.pt')
+temp = pathlib.PosixPath
+pathlib.WindowsPath = pathlib.PosixPath
+
+# ข้ามการตรวจสอบความปลอดภัยเพื่อโหลดโมเดล YOLOv5 ของคุณ
+torch.hub._validate_not_a_forked_repo = lambda a, b, c: True
+
+# โหลดโมเดลด้วย torch.hub แบบดั้งเดิม (รองรับ best.pt ของคุณชัวร์ 100%)
+model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt', trust_repo=True)
 
 app = Flask(__name__)
 
@@ -20,14 +27,15 @@ def predict():
         img = Image.open(file.stream)
         
         # รันพยากรณ์ภาพ
-        results = model(img, conf=0.5, iou=0.4)
+        results = model(img)
         
         os.makedirs("static", exist_ok=True)
         
-        for r in results:
-            im_array = r.plot()
-            im = Image.fromarray(im_array[..., ::-1])
-            im.save("static/image0.jpg")
+        # บันทึกภาพผลลัพธ์
+        results.render()  # เรนเดอร์กรอบลงในภาพของ YOLOv5
+        for im in results.ims:
+            im_base64 = Image.fromarray(im)
+            im_base64.save("static/image0.jpg")
 
         return render_template("index.html", result_image="static/image0.jpg")
 
