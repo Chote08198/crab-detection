@@ -7,3 +7,4 @@ Flask
 requests
 pandas
 numpy
+tqdm
