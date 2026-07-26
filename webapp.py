@@ -1,25 +1,20 @@
 import pathlib
 import torch
+import os
+from PIL import Image
+from flask import Flask, render_template, request, redirect
 
 temp = pathlib.PosixPath
 pathlib.WindowsPath = pathlib.PosixPath
 
-# สั่งให้โหลดโดยระบุ trust_repo=True เพื่อบังคับข้ามการถามยืนยันผ่านเซิร์ฟเวอร์
+# โหลดโมเดล YOLOv5 ดั้งเดิมที่รองรับ .render() และ .ims ของคุณ
 model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt', trust_repo=True)
-
-from flask import Flask, render_template, request, redirect
-import torch
-import os
-from PIL import Image
 
 app = Flask(__name__)
 
-
-# ----------------------------------------------------
-# ⚙️ ปรับตั้งค่าความแม่นยำในการจับกรอบตรงนี้:
-model.conf = 0.60  # แสดงเฉพาะวัตถุที่มั่นใจมากกว่า 60% ขึ้นไป (ช่วยลดกรอบมั่ว)
-model.iou = 0.40   # ตัดกรอบที่จับซ้อนทับตำแหน่งเดียวกันออก (ช่วยลดกรอบซ้ำ)
-# ----------------------------------------------------
+# ตั้งค่าความแม่นยำ (ย้ายมาไว้ตรงนี้ถูกต้องแล้วครับ)
+model.conf = 0.60
+model.iou = 0.40
 
 @app.route("/", methods=["GET", "POST"])
 def predict():
