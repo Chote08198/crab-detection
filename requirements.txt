@@ -6,3 +6,4 @@ gunicorn
 Flask
 numpy
 pandas
+tqdm
