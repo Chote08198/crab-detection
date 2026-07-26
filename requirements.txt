@@ -1,9 +1,10 @@
-torch
-torchvision
+Flask
+gunicorn
 ultralytics
 opencv-python-headless
-gunicorn
-Flask
 numpy
 pandas
-tqdm
+matplotlib
+seaborn
+torch
+torchvision
